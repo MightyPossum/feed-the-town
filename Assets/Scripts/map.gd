@@ -100,16 +100,14 @@ func _input(event):
 				previous_tile_coords = null
 				
 func select_tile(tile : int):
+	bulldozer = false		
 	match tile:
 		1:
-			selected_tile = Vector2i(0,13)
-			bulldozer = false			
+			selected_tile = Vector2i(0,13)	
 		2:
 			selected_tile = Vector2i(0,17)
-			bulldozer = false
 		3:
 			selected_tile = Vector2i(0,19)
-			bulldozer = false
 		4:
 			selected_tile = Vector2i(0,21)
 			bulldozer = true
