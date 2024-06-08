@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dfruisq0aljgw"]
+[gd_scene load_steps=19 format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
 [ext_resource type="Script" path="res://Assets/Scripts/map.gd" id="2_434ni"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://t852c2xwiofw" path="res://Assets/Art/Sprite_06.png" id="6_xee8t"]
 [ext_resource type="Texture2D" uid="uid://bk3jh4pfq7n2y" path="res://Assets/Art/Sprite_07.png" id="7_37drx"]
 [ext_resource type="Texture2D" uid="uid://6khvuf1g23tn" path="res://Assets/Art/Sprite_08.png" id="8_f1i3c"]
-[ext_resource type="Script" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")
@@ -150,7 +149,3 @@ script = ExtResource("2_434ni")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(572, 330)
-
-[node name="PathHandler" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("10_1w0kk")

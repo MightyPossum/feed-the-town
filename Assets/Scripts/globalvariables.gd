@@ -14,27 +14,6 @@ enum PURCHASE_TYPE {
     SELL,
 }
 
-enum CONSTRUCTABLETILE {
-	ROAD,
-	TURN,
-	CROSS,
-	BULLDOZER,
-}
-
-enum LOCATION_TYPE {
-    HOMEBASE,
-    MINING,
-    PRODUCTION,
-    PATH,
-}
-
-enum COMPASS {
-    EAST,
-    NORTH,
-    WEST,
-    SOUTH,
-}
-
 var money : float = 0.0
 
 var material_location_type : Dictionary = {
