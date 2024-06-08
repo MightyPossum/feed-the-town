@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dfruisq0aljgw"]
+[gd_scene load_steps=25 format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
 [ext_resource type="Script" path="res://Assets/Scripts/map.gd" id="2_434ni"]
@@ -10,6 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://bk3jh4pfq7n2y" path="res://Assets/Art/Sprite_07.png" id="7_37drx"]
 [ext_resource type="Texture2D" uid="uid://6khvuf1g23tn" path="res://Assets/Art/Sprite_08.png" id="8_f1i3c"]
 [ext_resource type="PackedScene" uid="uid://b6frtos7xmgi2" path="res://Assets/Scenes/gui.tscn" id="10_ccujc"]
+[ext_resource type="AudioStream" uid="uid://c2nnohlw84fka" path="res://Assets/Audio/place_road.wav" id="10_jhlak"]
+[ext_resource type="AudioStream" uid="uid://biqak2kj1cca7" path="res://Assets/Audio/kabalJam.wav" id="11_78iev"]
+[ext_resource type="AudioStream" uid="uid://c85fwrbqisq5u" path="res://Assets/Audio/place_road_failed.wav" id="11_wrh8i"]
+[ext_resource type="AudioStream" uid="uid://wmhtinu3lgm3" path="res://Assets/Audio/gain_material.wav" id="12_edwdt"]
+[ext_resource type="AudioStream" uid="uid://bg23frxqykmv6" path="res://Assets/Audio/sell_material.wav" id="13_ojr6t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")
@@ -147,5 +152,18 @@ layer_3/tile_data = PackedInt32Array()
 layer_4/name = "Selector"
 layer_4/tile_data = PackedInt32Array()
 script = ExtResource("2_434ni")
+SFX = [ExtResource("10_jhlak"), ExtResource("11_wrh8i"), ExtResource("12_edwdt"), ExtResource("13_ojr6t")]
 
 [node name="Camera2D" parent="." instance=ExtResource("10_ccujc")]
+
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
+position = Vector2(-5.65e+07, -3.43e+07)
+scale = Vector2(100000, 100000)
+
+[node name="BGMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_78iev")
+volume_db = -10.0
+autoplay = true
+
+[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0

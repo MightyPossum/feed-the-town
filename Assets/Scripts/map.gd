@@ -1,4 +1,8 @@
 extends TileMap
+
+
+@onready var sfx_player = $SFX
+@export var SFX = []
 var previous_tile_coords = null
 var selected_tile = null
 var tile_rotated = 0
@@ -113,11 +117,14 @@ func place_tile(tile : Vector2i):
 		return
 	
 	if bulldozer:
+		sfx_player.stream = SFX[0]
+		sfx_player.play()
 		set_cell(built_layer, tile_coords, -1)
 	else:
 		if get_cell_tile_data(built_layer, tile_coords) != null or get_cell_tile_data(base_layer, tile_coords) != null:
 			return	
-				
+		sfx_player.stream = SFX[1]
+		sfx_player.play()
 		set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
 	
 
