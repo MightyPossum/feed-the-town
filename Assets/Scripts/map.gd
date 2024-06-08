@@ -25,7 +25,6 @@ enum TileRotation {
 	ROTATE_270 = TileSetAtlasSource.TRANSFORM_FLIP_V | TileSetAtlasSource.TRANSFORM_TRANSPOSE,
 }
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	
 	if selected_tile == null:
@@ -35,7 +34,7 @@ func _ready():
 	if !mouse_control:
 		tile_coords = Vector2i(10,10)
 		set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
-	pass # Replace with function body.
+	pass
 	
 func _process(delta):	
 	clear_map_layer(selector_layer)
@@ -43,19 +42,14 @@ func _process(delta):
 	
 	if Input.is_action_just_released("select_1"):
 		select_tile(1)
-		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("select_2"):
 		select_tile(2)
-		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("select_3"):
 		select_tile(3)
-		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("select_4"):
 		select_tile(4)
-		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("place_tile"):
 		place_tile(selected_tile)
 		
@@ -65,13 +59,10 @@ func _process(delta):
 	if !mouse_control:	
 		if Input.is_action_just_pressed("up"):
 			tile_coords.y -= 1
-			#set_cell(3, tile_coords, 0, Vector2i(0,1))
 		if Input.is_action_just_pressed("down"):
 			tile_coords.y += 1
-			#set_cell(3, tile_coords, 0, Vector2i(0,1))
 		if Input.is_action_just_pressed("left"):
 			tile_coords.x -= 1
-			#set_cell(3, tile_coords, 0, Vector2i(0,1))
 		if Input.is_action_just_pressed("right"):
 			tile_coords.x += 1
 		
@@ -93,10 +84,10 @@ func _input(event):
 			var distance_to_center = tile_center.distance_to(local_mouse_position)
 			var center_treshold = 1 * 16
 			
-			if distance_to_center <= center_treshold:				
+			if distance_to_center <= center_treshold:
 				previous_tile_coords = tile_coords
 			
-		elif previous_tile_coords:				
+		elif previous_tile_coords:
 				previous_tile_coords = null
 				
 func select_tile(tile : int):
@@ -114,16 +105,16 @@ func select_tile(tile : int):
 
 func place_tile(tile : Vector2i):
 	
-	var placeable_layers = [base_layer, built_layer]
-#	
-	for layer in placeable_layers:
-		if get_cell_tile_data(layer, tile_coords) != null:
-			if bulldozer:
-				set_cell(built_layer, tile_coords, -1)
-				return
-			return	
+	if not tile_coords:
+		return
 	
-	set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
+	if bulldozer:
+		set_cell(built_layer, tile_coords, -1)
+	else:
+		if get_cell_tile_data(built_layer, tile_coords) != null or get_cell_tile_data(base_layer, tile_coords) != null:
+			return	
+				
+		set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
 	
 
 func rotate_tile():
@@ -151,7 +142,7 @@ func draw_tile():
 	set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
 	
 func change_color_scheme():
-	color = (color + 1) % 8	
+	color = (color + 1) % 8
 	
 	var used_rect = get_used_rect()
 
@@ -159,6 +150,6 @@ func change_color_scheme():
 		for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
 			for y in range(used_rect.position.y, used_rect.position.y + used_rect.size.y):
 				var tile = get_cell_tile_data(layer, Vector2i(x, y))
-				if tile != null: # Check if there is a tile placed at this position								
+				if tile != null:
 					set_cell(layer, Vector2i(x, y), color, get_cell_atlas_coords(layer, Vector2i(x,y)), get_cell_alternative_tile(layer, Vector2i(x,y)))
 	pass
