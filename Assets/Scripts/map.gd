@@ -10,6 +10,7 @@ var tile_coords = null
 var map_size = null
 
 var mouse_control = true
+var bulldozer = false
 
 var background_layer = 0
 var base_layer = 1
@@ -102,20 +103,27 @@ func select_tile(tile : int):
 	match tile:
 		1:
 			selected_tile = Vector2i(0,13)
+			bulldozer = false			
 		2:
 			selected_tile = Vector2i(0,17)
+			bulldozer = false
 		3:
 			selected_tile = Vector2i(0,19)
+			bulldozer = false
 		4:
 			selected_tile = Vector2i(0,21)
+			bulldozer = true
 
 func place_tile(tile : Vector2i):
 	
 	var placeable_layers = [base_layer, built_layer]
-	
+#	
 	for layer in placeable_layers:
 		if get_cell_tile_data(layer, tile_coords) != null:
-			return
+			if bulldozer:
+				set_cell(built_layer, tile_coords, -1)
+				return
+			return	
 	
 	set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
 	
