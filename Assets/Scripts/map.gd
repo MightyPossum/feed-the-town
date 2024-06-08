@@ -11,6 +11,12 @@ var map_size = null
 
 var mouse_control = true
 
+var background_layer = 0
+var base_layer = 1
+var built_layer = 2
+var construct_layer = 3
+var selector_layer = 4
+
 enum TileRotation {
 	ROTATE_0 = 0,
 	ROTATE_90 = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H,
@@ -27,12 +33,12 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if !mouse_control:
 		tile_coords = Vector2i(10,10)
-		set_cell(3, tile_coords, color, Vector2i(0,1))
+		set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
 	pass # Replace with function body.
 	
 func _process(delta):	
-	clear_map_layer(3)
-	clear_map_layer(2)
+	clear_map_layer(selector_layer)
+	clear_map_layer(construct_layer)
 	
 	if Input.is_action_just_released("select_1"):
 		select_tile(1)
@@ -104,11 +110,15 @@ func select_tile(tile : int):
 			selected_tile = Vector2i(0,21)
 
 func place_tile(tile : Vector2i):
-	if tile_rotated:
-			set_cell(1, tile_coords, color, selected_tile, tile_rotation())
-	else:
-		set_cell(1, tile_coords, color, selected_tile)
-	pass
+	
+	var placeable_layers = [base_layer, built_layer]
+	
+	for layer in placeable_layers:
+		if get_cell_tile_data(layer, tile_coords) != null:
+			return
+	
+	set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
+	
 
 func rotate_tile():
 	tile_rotated = (tile_rotated + 1) % 4
@@ -131,15 +141,15 @@ func clear_map_layer(layer: int):
 			set_cell(layer, Vector2i(x, y), -1)
 
 func draw_tile():
-	set_cell(2, tile_coords, color, selected_tile, tile_rotation())
-	set_cell(3, tile_coords, color, Vector2i(0,1))
+	set_cell(construct_layer, tile_coords, color, selected_tile, tile_rotation())
+	set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
 	
 func change_color_scheme():
 	color = (color + 1) % 8	
 	
 	var used_rect = get_used_rect()
 
-	for layer in [0, 1]:
+	for layer in [background_layer, base_layer, built_layer]:
 		for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
 			for y in range(used_rect.position.y, used_rect.position.y + used_rect.size.y):
 				var tile = get_cell_tile_data(layer, Vector2i(x, y))
