@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://u38vo7qrjtnn" path="res://Assets/Art/Coin_06.png" id="23_2xibj"]
 [ext_resource type="Texture2D" uid="uid://w7s1171swlcn" path="res://Assets/Art/Coin_07.png" id="24_78dn7"]
 [ext_resource type="Texture2D" uid="uid://drxr6b17b3omi" path="res://Assets/Art/Coin_08.png" id="25_ai5ws"]
+[ext_resource type="Script" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")
@@ -221,3 +222,7 @@ stretch_mode = 4
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/HBoxContainer"]
 layout_mode = 2
 text = "No text shown"
+
+[node name="PathHandler" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_1w0kk")

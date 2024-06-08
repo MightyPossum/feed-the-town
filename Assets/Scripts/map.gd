@@ -8,7 +8,7 @@ extends TileMap
 @export var gui_coin_texture = []
 @export var SFX = []
 var previous_tile_coords = null
-var selected_tile = null
+var selected_tile : Array = []
 var tile_rotated = 0
 var color = 0
 
@@ -33,18 +33,18 @@ enum TileRotation {
 	ROTATE_270 = TileSetAtlasSource.TRANSFORM_FLIP_V | TileSetAtlasSource.TRANSFORM_TRANSPOSE,
 }
 
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	if selected_tile == null:
+	if selected_tile.size() <= 0:
 		select_tile(4)
 	set_process_input(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	if !mouse_control:
 		tile_coords = Vector2i(34,21)
 		set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
-	pass
 	
-func _process(delta):	
+func _process(_delta):	
 	clear_map_layer(selector_layer)
 	clear_map_layer(construct_layer)
 	
@@ -58,8 +58,8 @@ func _process(delta):
 		select_tile(4)
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-	if Input.is_action_pressed("place_tile"):
-		place_tile(selected_tile)
+	if Input.is_action_just_released("place_tile"):
+		place_tile()
 		
 	if Input.is_action_just_released("change_color"):
 		change_color_scheme()
@@ -106,20 +106,20 @@ func select_tile(tile : int):
 	bulldozer = false		
 	match tile:
 		1:
-			selected_tile = Vector2i(0,13)	
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.ROAD,Vector2i(0,13),tile_rotated, Vector2i(0,0)]
 		2:
-			selected_tile = Vector2i(0,17)
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.TURN,Vector2i(0,17),tile_rotated, Vector2i(0,0)]
 		3:
-			selected_tile = Vector2i(0,19)
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.CROSS,Vector2i(0,19),tile_rotated, Vector2i(0,0)]
 		4:
-			selected_tile = Vector2i(0,21)
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.BULLDOZER,Vector2i(0,21),tile_rotated, Vector2i(0,0)]
 			bulldozer = true
 
-func place_tile(tile : Vector2i):
+func place_tile():
 	
 	if not tile_coords:
 		return
-	
+	print(tile_coords)
 	if bulldozer:
 		sfx_player.stream = SFX[0]
 		sfx_player.play()
@@ -130,22 +130,31 @@ func place_tile(tile : Vector2i):
 		sfx_player.stream = SFX[1]
 		sfx_player.play()
 		set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
+
+	selected_tile[3] = tile_coords
+	%PathHandler.calculate_paths(selected_tile)
 	
 
 func rotate_tile():
 	tile_rotated = (tile_rotated + 1) % 4
+	selected_tile[2] = tile_rotated
 	
-func tile_rotation():
+func tile_rotation() -> int:
+
+	var current_rotation = 0
 	
 	match tile_rotated:
 		0:
-			return TileRotation.ROTATE_0
+			current_rotation = TileRotation.ROTATE_0
 		1:
-			return TileRotation.ROTATE_90
+			current_rotation = TileRotation.ROTATE_90
 		2:
-			return TileRotation.ROTATE_180
+			current_rotation = TileRotation.ROTATE_180
 		3:
-			return TileRotation.ROTATE_270
+			current_rotation = TileRotation.ROTATE_270
+
+	return current_rotation
+
 func clear_map_layer(layer: int):
 	var used_rect = get_used_rect()
 	for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
@@ -153,7 +162,7 @@ func clear_map_layer(layer: int):
 			set_cell(layer, Vector2i(x, y), -1)
 
 func draw_tile():
-	set_cell(construct_layer, tile_coords, color, selected_tile, tile_rotation())
+	set_cell(construct_layer, tile_coords, color, selected_tile[1], tile_rotation())
 	set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
 	
 func change_color_scheme():
