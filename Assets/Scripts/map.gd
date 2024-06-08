@@ -119,7 +119,6 @@ func place_tile():
 	
 	if not tile_coords:
 		return
-	print(tile_coords)
 	if bulldozer:
 		sfx_player.stream = SFX[0]
 		sfx_player.play()
@@ -129,7 +128,7 @@ func place_tile():
 			return	
 		sfx_player.stream = SFX[1]
 		sfx_player.play()
-		set_cell(built_layer, tile_coords, color, selected_tile[3], tile_rotation())
+		set_cell(built_layer, tile_coords, color, selected_tile[1], tile_rotation())
 
 	selected_tile[3] = tile_coords
 	%PathHandler.calculate_paths(selected_tile)

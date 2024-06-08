@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dfruisq0aljgw"]
+[gd_scene load_steps=42 format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
 [ext_resource type="Script" path="res://Assets/Scripts/map.gd" id="2_434ni"]
@@ -9,7 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://t852c2xwiofw" path="res://Assets/Art/Sprite_06.png" id="6_xee8t"]
 [ext_resource type="Texture2D" uid="uid://bk3jh4pfq7n2y" path="res://Assets/Art/Sprite_07.png" id="7_37drx"]
 [ext_resource type="Texture2D" uid="uid://6khvuf1g23tn" path="res://Assets/Art/Sprite_08.png" id="8_f1i3c"]
-[ext_resource type="PackedScene" uid="uid://b6frtos7xmgi2" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
+[ext_resource type="Script" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
+[ext_resource type="PackedScene" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
 [ext_resource type="AudioStream" uid="uid://c2nnohlw84fka" path="res://Assets/Audio/place_road.wav" id="10_jhlak"]
 [ext_resource type="Texture2D" uid="uid://cqha5payu5fdp" path="res://Assets/Art/Patch_02.png" id="11_7vbd3"]
 [ext_resource type="AudioStream" uid="uid://biqak2kj1cca7" path="res://Assets/Audio/kabalJam.wav" id="11_78iev"]
@@ -31,7 +32,6 @@
 [ext_resource type="Texture2D" uid="uid://u38vo7qrjtnn" path="res://Assets/Art/Coin_06.png" id="23_2xibj"]
 [ext_resource type="Texture2D" uid="uid://w7s1171swlcn" path="res://Assets/Art/Coin_07.png" id="24_78dn7"]
 [ext_resource type="Texture2D" uid="uid://drxr6b17b3omi" path="res://Assets/Art/Coin_08.png" id="25_ai5ws"]
-[ext_resource type="Script" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")

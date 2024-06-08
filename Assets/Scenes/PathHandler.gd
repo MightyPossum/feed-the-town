@@ -68,6 +68,16 @@ func calculate_paths(selected_tile : Array):
 	elif selected_tile[0] == GLOBALVARIABLES.CONSTRUCTABLETILE.BULLDOZER:
 		remove_tile_from_paths(selected_tile[3])
 
+	# Check any potential paths
+	for start_vector in defined_locations:
+		for end_vector in defined_locations:
+			if start_vector != end_vector and location_dictionary[start_vector].location_type != location_dictionary[end_vector].location_type:
+				var dijkstra_result = dijkstra(start_vector, end_vector)
+				if dijkstra_result.size() > 1 and dijkstra_result.path.front() == start_vector:
+					print(end_vector)
+					print(dijkstra_result.path)
+
+
 func check_connect_locations(_location : location):
 	var test_vector : Vector2i
 	var current_vector : Vector2i = _location.location_coords
@@ -94,11 +104,6 @@ func try_connect(current_vector, test_vector, compass_int):
 			connection_succeeded = true
 		if not neighbor_dictionary[current_vector].has(test_vector) and connection_succeeded: 
 			neighbor_dictionary[current_vector][test_vector] = 150
-
-		if [GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE, GLOBALVARIABLES.LOCATION_TYPE.MINING, GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION].has(location_dictionary[test_vector].location_type):
-			for vector in defined_locations:
-				if vector != test_vector and location_dictionary[vector].location_type != location_dictionary[test_vector].location_type:
-					print(dijkstra(test_vector, vector))
 
 
 func remove_tile_from_paths(tile_vector : Vector2i):
