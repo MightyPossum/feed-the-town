@@ -2,6 +2,7 @@ extends TileMap
 var previous_tile_coords = null
 var selected_tile = null
 var tile_rotated = 0
+var color = 0
 
 var mouse_position = null
 var local_mouse_position = null
@@ -26,55 +27,49 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if !mouse_control:
 		tile_coords = Vector2i(10,10)
-		set_cell(3, tile_coords, 0, Vector2i(0,1))
+		set_cell(3, tile_coords, color, Vector2i(0,1))
 	pass # Replace with function body.
 	
 func _process(delta):	
+	clear_map_layer(3)
+	clear_map_layer(2)
 	
 	if Input.is_action_just_released("select_1"):
 		select_tile(1)
-		clear_map_layer(2)
-		set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
+		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("select_2"):
 		select_tile(2)
-		clear_map_layer(2)
-		set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
+		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("select_3"):
 		select_tile(3)
-		clear_map_layer(2)
-		set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
+		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("select_4"):
 		select_tile(4)
-		clear_map_layer(2)
-		set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
+		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-		clear_map_layer(2)
-		set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
+		#set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
 	if Input.is_action_just_released("place_tile"):
 		place_tile(selected_tile)
+		
+	if Input.is_action_just_released("change_color"):
+		change_color_scheme()
 		
 	if !mouse_control:	
 		if Input.is_action_just_pressed("up"):
 			tile_coords.y -= 1
-			clear_map_layer(3)
-			clear_map_layer(2)
-			set_cell(3, tile_coords, 0, Vector2i(0,1))
+			#set_cell(3, tile_coords, 0, Vector2i(0,1))
 		if Input.is_action_just_pressed("down"):
 			tile_coords.y += 1
-			clear_map_layer(3)
-			clear_map_layer(2)
-			set_cell(3, tile_coords, 0, Vector2i(0,1))
+			#set_cell(3, tile_coords, 0, Vector2i(0,1))
 		if Input.is_action_just_pressed("left"):
 			tile_coords.x -= 1
-			clear_map_layer(3)
-			clear_map_layer(2)
-			set_cell(3, tile_coords, 0, Vector2i(0,1))
+			#set_cell(3, tile_coords, 0, Vector2i(0,1))
 		if Input.is_action_just_pressed("right"):
 			tile_coords.x += 1
-			clear_map_layer(3)
-			clear_map_layer(2)
-			set_cell(3, tile_coords, 0, Vector2i(0,1))
+		
+	if tile_coords != null:
+		draw_tile()
 
 
 func _input(event):
@@ -91,23 +86,11 @@ func _input(event):
 			var distance_to_center = tile_center.distance_to(local_mouse_position)
 			var center_treshold = 1 * 16
 			
-			if distance_to_center <= center_treshold:			
-				if previous_tile_coords and previous_tile_coords != tile_coords:
-					set_cell(3,previous_tile_coords, -1)
-					set_cell(2,previous_tile_coords, -1)
-				set_cell(3, tile_coords, 0, Vector2i(0,1))
-				set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
-			
+			if distance_to_center <= center_treshold:				
 				previous_tile_coords = tile_coords
 			
-		elif previous_tile_coords:
-				set_cell(3,previous_tile_coords, -1)
-				set_cell(2,previous_tile_coords, -1)
+		elif previous_tile_coords:				
 				previous_tile_coords = null
-	
-	else:
-		set_cell(2, tile_coords, 0, selected_tile, tile_rotation())
-		
 				
 func select_tile(tile : int):
 	match tile:
@@ -122,14 +105,13 @@ func select_tile(tile : int):
 
 func place_tile(tile : Vector2i):
 	if tile_rotated:
-			set_cell(1, tile_coords, 0, selected_tile, tile_rotation())
+			set_cell(1, tile_coords, color, selected_tile, tile_rotation())
 	else:
-		set_cell(1, tile_coords, 0, selected_tile)
+		set_cell(1, tile_coords, color, selected_tile)
 	pass
 
 func rotate_tile():
 	tile_rotated = (tile_rotated + 1) % 4
-	set_cell(2, tile_coords, 0, selected_tile, tile_rotation())	
 	
 func tile_rotation():
 	
@@ -147,4 +129,20 @@ func clear_map_layer(layer: int):
 	for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
 		for y in range(used_rect.position.y, used_rect.position.y + used_rect.size.y):
 			set_cell(layer, Vector2i(x, y), -1)
+
+func draw_tile():
+	set_cell(2, tile_coords, color, selected_tile, tile_rotation())
+	set_cell(3, tile_coords, color, Vector2i(0,1))
+	
+func change_color_scheme():
+	color = (color + 1) % 8	
+	
+	var used_rect = get_used_rect()
+
+	for layer in [0, 1]:
+		for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
+			for y in range(used_rect.position.y, used_rect.position.y + used_rect.size.y):
+				var tile = get_cell_tile_data(layer, Vector2i(x, y))
+				if tile != null: # Check if there is a tile placed at this position								
+					set_cell(layer, Vector2i(x, y), color, get_cell_atlas_coords(layer, Vector2i(x,y)), get_cell_alternative_tile(layer, Vector2i(x,y)))
 	pass
