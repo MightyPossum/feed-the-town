@@ -30,9 +30,9 @@ func _ready():
 	if selected_tile == null:
 		select_tile(4)
 	set_process_input(true)
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	if !mouse_control:
-		tile_coords = Vector2i(10,10)
+		tile_coords = Vector2i(34,21)
 		set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
 	pass
 	
@@ -50,7 +50,7 @@ func _process(delta):
 		select_tile(4)
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-	if Input.is_action_just_released("place_tile"):
+	if Input.is_action_pressed("place_tile"):
 		place_tile(selected_tile)
 		
 	if Input.is_action_just_released("change_color"):
@@ -71,6 +71,10 @@ func _process(delta):
 
 
 func _input(event):
+	
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
+	
 	if event is InputEventMouseMotion and mouse_control:
 		mouse_position = event.position
 		local_mouse_position = to_local(mouse_position)
