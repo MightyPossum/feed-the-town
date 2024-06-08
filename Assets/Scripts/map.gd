@@ -1,4 +1,12 @@
 extends TileMap
+
+
+@onready var sfx_player = $SFX
+@onready var gui_rect = $Control/NinePatchRect
+@onready var gui_coin = $Control/HBoxContainer/Coin
+@export var gui_rect_texture = []
+@export var gui_coin_texture = []
+@export var SFX = []
 var previous_tile_coords = null
 var selected_tile = null
 var tile_rotated = 0
@@ -30,9 +38,9 @@ func _ready():
 	if selected_tile == null:
 		select_tile(4)
 	set_process_input(true)
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	if !mouse_control:
-		tile_coords = Vector2i(10,10)
+		tile_coords = Vector2i(34,21)
 		set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
 	pass
 	
@@ -50,7 +58,7 @@ func _process(delta):
 		select_tile(4)
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-	if Input.is_action_just_released("place_tile"):
+	if Input.is_action_pressed("place_tile"):
 		place_tile(selected_tile)
 		
 	if Input.is_action_just_released("change_color"):
@@ -71,6 +79,10 @@ func _process(delta):
 
 
 func _input(event):
+	
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
+	
 	if event is InputEventMouseMotion and mouse_control:
 		mouse_position = event.position
 		local_mouse_position = to_local(mouse_position)
@@ -109,11 +121,14 @@ func place_tile(tile : Vector2i):
 		return
 	
 	if bulldozer:
+		sfx_player.stream = SFX[0]
+		sfx_player.play()
 		set_cell(built_layer, tile_coords, -1)
 	else:
 		if get_cell_tile_data(built_layer, tile_coords) != null or get_cell_tile_data(base_layer, tile_coords) != null:
 			return	
-				
+		sfx_player.stream = SFX[1]
+		sfx_player.play()
 		set_cell(built_layer, tile_coords, color, selected_tile, tile_rotation())
 	
 
@@ -145,6 +160,9 @@ func change_color_scheme():
 	color = (color + 1) % 8
 	
 	var used_rect = get_used_rect()
+	
+	gui_rect.texture = gui_rect_texture[color]
+	gui_coin.texture = gui_coin_texture[color]
 
 	for layer in [background_layer, base_layer, built_layer]:
 		for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):

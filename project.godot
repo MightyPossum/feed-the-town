@@ -20,7 +20,10 @@ GLOBALVARIABLES="*res://Assets/Scripts/globalvariables.gd"
 
 [display]
 
-window/stretch/scale_mode="integer"
+window/size/viewport_width=768
+window/size/viewport_height=1152
+window/size/resizable=false
+window/handheld/orientation=1
 
 [input]
 
