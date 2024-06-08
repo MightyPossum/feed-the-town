@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dfruisq0aljgw"]
+[gd_scene load_steps=41 format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
 [ext_resource type="Script" path="res://Assets/Scripts/map.gd" id="2_434ni"]
@@ -9,12 +9,28 @@
 [ext_resource type="Texture2D" uid="uid://t852c2xwiofw" path="res://Assets/Art/Sprite_06.png" id="6_xee8t"]
 [ext_resource type="Texture2D" uid="uid://bk3jh4pfq7n2y" path="res://Assets/Art/Sprite_07.png" id="7_37drx"]
 [ext_resource type="Texture2D" uid="uid://6khvuf1g23tn" path="res://Assets/Art/Sprite_08.png" id="8_f1i3c"]
-[ext_resource type="PackedScene" uid="uid://b6frtos7xmgi2" path="res://Assets/Scenes/gui.tscn" id="10_ccujc"]
+[ext_resource type="PackedScene" uid="uid://b6frtos7xmgi2" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
 [ext_resource type="AudioStream" uid="uid://c2nnohlw84fka" path="res://Assets/Audio/place_road.wav" id="10_jhlak"]
+[ext_resource type="Texture2D" uid="uid://cqha5payu5fdp" path="res://Assets/Art/Patch_02.png" id="11_7vbd3"]
 [ext_resource type="AudioStream" uid="uid://biqak2kj1cca7" path="res://Assets/Audio/kabalJam.wav" id="11_78iev"]
 [ext_resource type="AudioStream" uid="uid://c85fwrbqisq5u" path="res://Assets/Audio/place_road_failed.wav" id="11_wrh8i"]
 [ext_resource type="AudioStream" uid="uid://wmhtinu3lgm3" path="res://Assets/Audio/gain_material.wav" id="12_edwdt"]
+[ext_resource type="Texture2D" uid="uid://bb3wh7a867yhh" path="res://Assets/Art/Patch_03.png" id="12_moui8"]
 [ext_resource type="AudioStream" uid="uid://bg23frxqykmv6" path="res://Assets/Audio/sell_material.wav" id="13_ojr6t"]
+[ext_resource type="Texture2D" uid="uid://cvcgoljmm48ff" path="res://Assets/Art/Patch_04.png" id="13_tt7iq"]
+[ext_resource type="Texture2D" uid="uid://c36jgxbvy3mmx" path="res://Assets/Art/Patch_05.png" id="14_pl3ke"]
+[ext_resource type="Texture2D" uid="uid://bmbp807qug1sr" path="res://Assets/Art/Patch_06.png" id="15_rhihf"]
+[ext_resource type="Texture2D" uid="uid://usd2hug7440d" path="res://Assets/Art/Patch_07.png" id="16_tl70f"]
+[ext_resource type="Texture2D" uid="uid://cj7qhgkxg5cux" path="res://Assets/Art/Patch_01.png" id="16_wc62g"]
+[ext_resource type="Texture2D" uid="uid://bvm58e5jo0ntf" path="res://Assets/Art/Patch_08.png" id="17_flbsq"]
+[ext_resource type="Texture2D" uid="uid://dui6bqitedmps" path="res://Assets/Art/Coin_01.png" id="18_bs3ji"]
+[ext_resource type="Texture2D" uid="uid://dwjx1buwaknp8" path="res://Assets/Art/Coin_02.png" id="19_8eip4"]
+[ext_resource type="Texture2D" uid="uid://rjih6wj8ofx1" path="res://Assets/Art/Coin_03.png" id="20_tl7ya"]
+[ext_resource type="Texture2D" uid="uid://cw6luj6bu0jrv" path="res://Assets/Art/Coin_04.png" id="21_gfvhu"]
+[ext_resource type="Texture2D" uid="uid://g76ewadlms76" path="res://Assets/Art/Coin_05.png" id="22_whuo6"]
+[ext_resource type="Texture2D" uid="uid://u38vo7qrjtnn" path="res://Assets/Art/Coin_06.png" id="23_2xibj"]
+[ext_resource type="Texture2D" uid="uid://w7s1171swlcn" path="res://Assets/Art/Coin_07.png" id="24_78dn7"]
+[ext_resource type="Texture2D" uid="uid://drxr6b17b3omi" path="res://Assets/Art/Coin_08.png" id="25_ai5ws"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")
@@ -152,11 +168,13 @@ layer_3/tile_data = PackedInt32Array()
 layer_4/name = "Selector"
 layer_4/tile_data = PackedInt32Array()
 script = ExtResource("2_434ni")
+gui_rect_texture = [ExtResource("16_wc62g"), ExtResource("11_7vbd3"), ExtResource("12_moui8"), ExtResource("13_tt7iq"), ExtResource("14_pl3ke"), ExtResource("15_rhihf"), ExtResource("16_tl70f"), ExtResource("17_flbsq")]
+gui_coin_texture = [ExtResource("18_bs3ji"), ExtResource("19_8eip4"), ExtResource("20_tl7ya"), ExtResource("21_gfvhu"), ExtResource("22_whuo6"), ExtResource("23_2xibj"), ExtResource("24_78dn7"), ExtResource("25_ai5ws")]
 SFX = [ExtResource("10_jhlak"), ExtResource("11_wrh8i"), ExtResource("12_edwdt"), ExtResource("13_ojr6t")]
 
-[node name="Camera2D" parent="." instance=ExtResource("10_ccujc")]
+[node name="Camera" parent="." instance=ExtResource("10_ccujc")]
 
-[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera"]
 position = Vector2(-5.65e+07, -3.43e+07)
 scale = Vector2(100000, 100000)
 
@@ -167,3 +185,39 @@ autoplay = true
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="."]
 volume_db = -10.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 375.0
+offset_top = 55.0
+offset_right = 756.0
+offset_bottom = 115.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control"]
+layout_mode = 0
+offset_left = -2.0
+offset_right = 381.0
+offset_bottom = 40.0
+texture = ExtResource("16_wc62g")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 378.0
+offset_bottom = 37.0
+
+[node name="Coin" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_bs3ji")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/HBoxContainer"]
+layout_mode = 2
+text = "No text shown"

@@ -1,59 +1,42 @@
-[gd_scene format=3 uid="uid://b6frtos7xmgi2"]
+[gd_scene format=3 uid="uid://da634rd01jih8"]
 
-[node name="Camera2D" type="Camera2D"]
-position = Vector2(565, 343)
-scale = Vector2(1e-05, 1e-05)
-zoom = Vector2(2, 2)
-
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_left = -1.92e+07
-offset_top = -2.88e+07
-offset_right = 1.92e+07
-offset_bottom = 2.88e+07
-
-[node name="ColorRect" type="ColorRect" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.099
-offset_bottom = 97600.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.101
-offset_bottom = -17599.5
-theme_override_constants/separation = 10
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 100
+columns = 3
 
-[node name="Button" type="Button" parent="Control/HBoxContainer"]
+[node name="Panel" type="Panel" parent="GridContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 0
-text = "TEXT
-"
 
-[node name="Button2" type="Button" parent="Control/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/h_separation = 0
-text = "TEXT
-"
+[node name="ColorRect" type="ColorRect" parent="GridContainer/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Button3" type="Button" parent="Control/HBoxContainer"]
+[node name="Panel3" type="Panel" parent="GridContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 0
-text = "TEXT
-"
 
-[node name="Button4" type="Button" parent="Control/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/h_separation = 0
-text = "TEXT
-"
+[node name="ColorRect" type="ColorRect" parent="GridContainer/Panel3"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0, 1, 1)
 
-[node name="Button5" type="Button" parent="Control/HBoxContainer"]
+[node name="Panel2" type="Panel" parent="GridContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 0
-text = "TEXT
-"
+
+[node name="ColorRect" type="ColorRect" parent="GridContainer/Panel2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 1, 1, 1)
