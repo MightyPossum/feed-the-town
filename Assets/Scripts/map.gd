@@ -12,14 +12,9 @@ extends TileMap
 
 @export var gui_color : Array[Color]
 
-
-
-
-
 var previous_tile_coords = null
 var selected_tile : Array = []
 var tile_rotated = 0
-var color = 0
 
 var mouse_position = null
 var local_mouse_position = null
@@ -42,6 +37,16 @@ enum TileRotation {
 	ROTATE_270 = TileSetAtlasSource.TRANSFORM_FLIP_V | TileSetAtlasSource.TRANSFORM_TRANSPOSE,
 }
 
+var Tile_dictionary = {
+	"straight_road": Vector2i(0,13),
+	"bent_road": Vector2i(0,17),
+	"cross_road": Vector2i(0,19),
+	"bulldozer": Vector2i(0,21),
+	"road_car": Vector2i(0,15),
+	"turn_car": Vector2i(0,23),
+	"cross_car": Vector2i(0,25)
+	}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -51,7 +56,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	if !mouse_control:
 		tile_coords = Vector2i(34,21)
-		set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
+		set_cell(selector_layer, tile_coords, GLOBALVARIABLES.color, Vector2i(0,1))
 	
 func _process(_delta):	
 	clear_map_layer(selector_layer)
@@ -67,7 +72,7 @@ func _process(_delta):
 		select_tile(4)
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-	if Input.is_action_just_released("place_tile"):
+	if Input.is_action_pressed("place_tile"):
 		place_tile()
 		
 	if Input.is_action_just_released("change_color"):
@@ -115,13 +120,13 @@ func select_tile(tile : int):
 	bulldozer = false		
 	match tile:
 		1:
-			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.ROAD,Vector2i(0,13),tile_rotated, Vector2i(0,0)]
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.ROAD,Tile_dictionary["straight_road"],tile_rotated, Vector2i(0,0),0] # Straight Road
 		2:
-			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.TURN,Vector2i(0,17),tile_rotated, Vector2i(0,0)]
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.TURN,Tile_dictionary["bent_road"],tile_rotated, Vector2i(0,0),0] # Bent Road
 		3:
-			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.CROSS,Vector2i(0,19),tile_rotated, Vector2i(0,0)]
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.CROSS,Tile_dictionary["cross_road"],tile_rotated, Vector2i(0,0),0] # Cross Road
 		4:
-			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.BULLDOZER,Vector2i(0,21),tile_rotated, Vector2i(0,0)]
+			selected_tile = [GLOBALVARIABLES.CONSTRUCTABLETILE.BULLDOZER,Tile_dictionary["bulldozer"],tile_rotated, Vector2i(0,0),0] # Bulldozer
 			bulldozer = true
 
 func place_tile():
@@ -137,7 +142,8 @@ func place_tile():
 			return	
 		sfx_player.stream = SFX[1]
 		sfx_player.play()
-		set_cell(built_layer, tile_coords, color, selected_tile[1], tile_rotation())
+		selected_tile[4] = tile_rotation()
+		set_cell(built_layer, tile_coords, GLOBALVARIABLES.color, selected_tile[1], selected_tile[4])
 
 	selected_tile[3] = tile_coords
 	%PathHandler.calculate_paths(selected_tile)
@@ -169,21 +175,21 @@ func clear_map_layer(layer: int):
 			set_cell(layer, Vector2i(x, y), -1)
 
 func draw_tile():
-	set_cell(construct_layer, tile_coords, color, selected_tile[1], tile_rotation())
-	set_cell(selector_layer, tile_coords, color, Vector2i(0,1))
+	set_cell(construct_layer, tile_coords, GLOBALVARIABLES.color, selected_tile[1], tile_rotation())
+	set_cell(selector_layer, tile_coords, GLOBALVARIABLES.color, Vector2i(0,1))
 	
 func change_color_scheme():
-	color = (color + 1) % 8
+	GLOBALVARIABLES.color = (GLOBALVARIABLES.color + 1) % 8
 	var used_rect = get_used_rect()
 	
-	gui_rect.texture = gui_rect_texture[color]
-	gui_coin.texture = gui_coin_texture[color]
-	score_text.add_theme_color_override("font_color", Color(gui_color[color]))
+	gui_rect.texture = gui_rect_texture[GLOBALVARIABLES.color]
+	gui_coin.texture = gui_coin_texture[GLOBALVARIABLES.color]
+	score_text.add_theme_color_override("font_color", Color(gui_color[GLOBALVARIABLES.color]))
 
 	for layer in [background_layer, base_layer, built_layer]:
 		for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
 			for y in range(used_rect.position.y, used_rect.position.y + used_rect.size.y):
 				var tile = get_cell_tile_data(layer, Vector2i(x, y))
 				if tile != null:
-					set_cell(layer, Vector2i(x, y), color, get_cell_atlas_coords(layer, Vector2i(x,y)), get_cell_alternative_tile(layer, Vector2i(x,y)))
+					set_cell(layer, Vector2i(x, y), GLOBALVARIABLES.color, get_cell_atlas_coords(layer, Vector2i(x,y)), get_cell_alternative_tile(layer, Vector2i(x,y)))
 	pass

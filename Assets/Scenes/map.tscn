@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dfruisq0aljgw"]
+[gd_scene load_steps=44 format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
 [ext_resource type="Script" path="res://Assets/Scripts/map.gd" id="2_434ni"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bk3jh4pfq7n2y" path="res://Assets/Art/Sprite_07.png" id="7_37drx"]
 [ext_resource type="Texture2D" uid="uid://6khvuf1g23tn" path="res://Assets/Art/Sprite_08.png" id="8_f1i3c"]
 [ext_resource type="Script" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
-[ext_resource type="PackedScene" uid="uid://b6frtos7xmgi2" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
+[ext_resource type="PackedScene" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
 [ext_resource type="AudioStream" uid="uid://c2nnohlw84fka" path="res://Assets/Audio/place_road.wav" id="10_jhlak"]
 [ext_resource type="Texture2D" uid="uid://cqha5payu5fdp" path="res://Assets/Art/Patch_02.png" id="11_7vbd3"]
 [ext_resource type="AudioStream" uid="uid://biqak2kj1cca7" path="res://Assets/Audio/kabalJam.wav" id="11_78iev"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://w7s1171swlcn" path="res://Assets/Art/Coin_07.png" id="24_78dn7"]
 [ext_resource type="Texture2D" uid="uid://drxr6b17b3omi" path="res://Assets/Art/Coin_08.png" id="25_ai5ws"]
 [ext_resource type="Script" path="res://Assets/Scenes/RouteController.gd" id="32_b8k7f"]
+[ext_resource type="FontFile" uid="uid://e8n71ugfrfbl" path="res://Assets/Fonts/ARCADECLASSIC.TTF" id="32_fgoer"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")
@@ -47,6 +48,8 @@ texture = ExtResource("1_4mii3")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfu5w"]
 texture = ExtResource("2_avcqt")
@@ -61,6 +64,8 @@ texture = ExtResource("2_avcqt")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7ayk3"]
 texture = ExtResource("3_k1uku")
@@ -75,6 +80,8 @@ texture = ExtResource("3_k1uku")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_brrhy"]
 texture = ExtResource("4_nqdj3")
@@ -89,6 +96,8 @@ texture = ExtResource("4_nqdj3")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qumf2"]
 texture = ExtResource("5_wymxo")
@@ -103,6 +112,8 @@ texture = ExtResource("5_wymxo")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6xqt2"]
 texture = ExtResource("6_xee8t")
@@ -117,6 +128,8 @@ texture = ExtResource("6_xee8t")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l1k31"]
 texture = ExtResource("7_37drx")
@@ -131,6 +144,8 @@ texture = ExtResource("7_37drx")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u8w0e"]
 texture = ExtResource("8_f1i3c")
@@ -145,6 +160,8 @@ texture = ExtResource("8_f1i3c")
 0:17/0 = 0
 0:19/0 = 0
 0:21/0 = 0
+0:23/0 = 0
+0:25/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_x2cmc"]
 sources/0 = SubResource("TileSetAtlasSource_vbyi5")

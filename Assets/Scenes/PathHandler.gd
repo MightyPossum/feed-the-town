@@ -5,14 +5,16 @@ var path_dictionary : Dictionary = {}
 var neighbor_dictionary : Dictionary
 var routes : Dictionary = {}
 
+@onready var tile_map = get_tree().root.get_node("Map")
+
 func _ready() -> void:
 
 	location_dictionary = GLOBALVARIABLES.location_dictionary
 	routes = GLOBALVARIABLES.travel_routes
 
-	location_dictionary[Vector2i(34,20)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE, 0, null, Vector2i(34,20), true, true, true, true)
-	location_dictionary[Vector2i(26,27)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 100, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(26,27), true, true, true, true)
-	location_dictionary[Vector2i(45,18)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION, 100, GLOBALVARIABLES.RESOURCE_TYPE.METAL, Vector2i(45,18), true, true, true, true)
+	location_dictionary[Vector2i(34,20)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE, 0, null, Vector2i(34,20), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(26,27)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 100, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(26,27), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(45,18)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION, 100, GLOBALVARIABLES.RESOURCE_TYPE.METAL, Vector2i(45,18), true, true, true, true, null, 0, null)
 
 	neighbor_dictionary[Vector2i(34,20)] = {} # Home Base
 	neighbor_dictionary[Vector2i(26,27)] = {} # Production 1
@@ -25,7 +27,13 @@ func _ready() -> void:
 func calculate_paths(selected_tile : Array):
 
 	if not location_dictionary.has(selected_tile[3]):
-		location_dictionary[selected_tile[3]] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PATH, 0, null, selected_tile[3], false, false, false, false)
+		var car_tile = tile_map.Tile_dictionary["road_car"]
+		if selected_tile[0] == GLOBALVARIABLES.CONSTRUCTABLETILE.TURN:
+			car_tile = tile_map.Tile_dictionary["turn_car"]
+		elif selected_tile[0] == GLOBALVARIABLES.CONSTRUCTABLETILE.CROSS:
+			car_tile = tile_map.Tile_dictionary["cross_car"]
+
+		location_dictionary[selected_tile[3]] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PATH, 0, null, selected_tile[3], false, false, false, false, selected_tile[1], selected_tile[4], car_tile)
 	
 	if not neighbor_dictionary.has(selected_tile[3]):
 		neighbor_dictionary[selected_tile[3]] = {}
@@ -78,13 +86,19 @@ func create_pathways():
 			if start_vector != end_vector and location_dictionary[start_vector].location_type != location_dictionary[end_vector].location_type:
 				var dijkstra_result = dijkstra(start_vector, end_vector)
 				if dijkstra_result.size() > 1 and dijkstra_result.path.front() == start_vector:
+					var break_the_loop = false
+					for vector in dijkstra_result.path:
+						if vector != dijkstra_result.path.front() and vector != dijkstra_result.path.back() and location_dictionary[vector].is_predetermined_location:
+							break_the_loop = true
+					if break_the_loop:
+						break;
+
 					if routes[end_vector].has(start_vector):
 						if routes[end_vector][start_vector].size() > dijkstra_result.path.size():
 							routes[end_vector][start_vector] = dijkstra_result.path
 					else:
 						if not routes[start_vector].has(end_vector):
 							routes[start_vector][end_vector] = dijkstra_result.path
-							print(dijkstra_result.path)
 						elif routes[start_vector][end_vector].size() > dijkstra_result.path.size():
 							routes[start_vector][end_vector] = dijkstra_result.path
 
@@ -110,10 +124,10 @@ func try_connect(current_vector, test_vector, compass_int):
 		var connection_succeeded : bool = false
 
 		if location_dictionary[test_vector].can_connect(compass_int) and not neighbor_dictionary[test_vector].has(current_vector):
-			neighbor_dictionary[test_vector][current_vector] = 150
+			neighbor_dictionary[test_vector][current_vector] = location_dictionary[test_vector].location_cost
 			connection_succeeded = true
-		if not neighbor_dictionary[current_vector].has(test_vector) and connection_succeeded: 
-			neighbor_dictionary[current_vector][test_vector] = 150
+		if not neighbor_dictionary[current_vector].has(test_vector) and connection_succeeded:
+			neighbor_dictionary[current_vector][test_vector] = location_dictionary[test_vector].location_cost
 
 
 func remove_tile_from_paths(tile_vector : Vector2i):
