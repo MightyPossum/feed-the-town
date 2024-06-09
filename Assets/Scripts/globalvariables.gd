@@ -36,6 +36,8 @@ enum COMPASS {
 }
 
 var money : float = 0.0
+var travel_routes : Dictionary
+var location_dictionary : Dictionary
 
 var material_location_type : Dictionary = {
     Vector2i(0,3):[RESOURCE_TYPE.ORE,500]

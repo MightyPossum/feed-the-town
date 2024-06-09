@@ -3,9 +3,12 @@ extends Node2D
 var location_dictionary : Dictionary = {}
 var path_dictionary : Dictionary = {}
 var neighbor_dictionary : Dictionary
-var defined_locations : Array = []
+var routes : Dictionary = {}
 
 func _ready() -> void:
+
+	location_dictionary = GLOBALVARIABLES.location_dictionary
+	routes = GLOBALVARIABLES.travel_routes
 
 	location_dictionary[Vector2i(34,20)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE, 0, null, Vector2i(34,20), true, true, true, true)
 	location_dictionary[Vector2i(26,27)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 100, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(26,27), true, true, true, true)
@@ -15,11 +18,9 @@ func _ready() -> void:
 	neighbor_dictionary[Vector2i(26,27)] = {} # Production 1
 	neighbor_dictionary[Vector2i(45,18)] = {} # Production 1
 
-	defined_locations.append(Vector2i(34,20))
-	defined_locations.append(Vector2i(26,27))
-	defined_locations.append(Vector2i(45,18))
-
-
+	routes[Vector2i(34,20)] = {}
+	routes[Vector2i(26,27)] = {}
+	routes[Vector2i(45,18)] = {}
 
 func calculate_paths(selected_tile : Array):
 
@@ -68,15 +69,24 @@ func calculate_paths(selected_tile : Array):
 	elif selected_tile[0] == GLOBALVARIABLES.CONSTRUCTABLETILE.BULLDOZER:
 		remove_tile_from_paths(selected_tile[3])
 
+	create_pathways()
+
+func create_pathways():
 	# Check any potential paths
-	for start_vector in defined_locations:
-		for end_vector in defined_locations:
+	for start_vector in routes:
+		for end_vector in routes:
 			if start_vector != end_vector and location_dictionary[start_vector].location_type != location_dictionary[end_vector].location_type:
 				var dijkstra_result = dijkstra(start_vector, end_vector)
 				if dijkstra_result.size() > 1 and dijkstra_result.path.front() == start_vector:
-					print(end_vector)
-					print(dijkstra_result.path)
-
+					if routes[end_vector].has(start_vector):
+						if routes[end_vector][start_vector].size() > dijkstra_result.path.size():
+							routes[end_vector][start_vector] = dijkstra_result.path
+					else:
+						if not routes[start_vector].has(end_vector):
+							routes[start_vector][end_vector] = dijkstra_result.path
+							print(dijkstra_result.path)
+						elif routes[start_vector][end_vector].size() > dijkstra_result.path.size():
+							routes[start_vector][end_vector] = dijkstra_result.path
 
 func check_connect_locations(_location : location):
 	var test_vector : Vector2i
@@ -114,7 +124,13 @@ func remove_tile_from_paths(tile_vector : Vector2i):
 	neighbor_dictionary.erase(tile_vector)
 	location_dictionary.erase(tile_vector)
 
-	
+	for start_location in routes:
+		for end_location in routes[start_location]:
+			for path in routes[start_location][end_location]:
+				if path == tile_vector:
+					routes[start_location].erase(end_location)
+
+	create_pathways()
 
 
 # define a function that implements Dijkstra's algorithm

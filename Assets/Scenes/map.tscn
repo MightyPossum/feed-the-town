@@ -32,7 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://u38vo7qrjtnn" path="res://Assets/Art/Coin_06.png" id="23_2xibj"]
 [ext_resource type="Texture2D" uid="uid://w7s1171swlcn" path="res://Assets/Art/Coin_07.png" id="24_78dn7"]
 [ext_resource type="Texture2D" uid="uid://drxr6b17b3omi" path="res://Assets/Art/Coin_08.png" id="25_ai5ws"]
-[ext_resource type="FontFile" uid="uid://e8n71ugfrfbl" path="res://Assets/Fonts/ARCADECLASSIC.TTF" id="32_fgoer"]
+[ext_resource type="Script" path="res://Assets/Scenes/RouteController.gd" id="32_b8k7f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
 texture = ExtResource("1_4mii3")
@@ -181,6 +181,13 @@ gui_color = Array[Color]([Color(0.972549, 0.796078, 0.231373, 1), Color(0.243137
 position = Vector2(-5.65e+07, -3.43e+07)
 scale = Vector2(100000, 100000)
 
+[node name="PathHandler" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_1w0kk")
+
+[node name="RouteController" type="Node2D" parent="."]
+script = ExtResource("32_b8k7f")
+
 [node name="BGMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_78iev")
 volume_db = -10.0
@@ -235,7 +242,3 @@ theme_override_fonts/font = ExtResource("32_fgoer")
 theme_override_font_sizes/font_size = 36
 text = "2000"
 horizontal_alignment = 1
-
-[node name="PathHandler" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("10_1w0kk")
