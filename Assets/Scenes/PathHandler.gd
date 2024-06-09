@@ -13,16 +13,48 @@ func _ready() -> void:
 	routes = GLOBALVARIABLES.travel_routes
 
 	location_dictionary[Vector2i(34,20)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE, 0, null, Vector2i(34,20), true, true, true, true, null, 0, null)
-	location_dictionary[Vector2i(26,27)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 100, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(26,27), true, true, true, true, null, 0, null)
-	location_dictionary[Vector2i(45,18)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION, 100, GLOBALVARIABLES.RESOURCE_TYPE.METAL, Vector2i(45,18), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(26,27)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 0, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(26,27), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(45,18)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION, 0, GLOBALVARIABLES.RESOURCE_TYPE.METAL, Vector2i(45,18), true, true, true, true, null, 0, null)
+	
+	location_dictionary[Vector2i(28,10)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 0, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(28,10), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(40,12)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 0, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(40,12), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(28,35)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 0, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(28,35), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(32,35)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 0, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(32,35), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(39,33)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.MINING, 0, GLOBALVARIABLES.RESOURCE_TYPE.ORE, Vector2i(39,33), true, true, true, true, null, 0, null)
+
+	
+	location_dictionary[Vector2i(27,20)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION, 0, GLOBALVARIABLES.RESOURCE_TYPE.METAL, Vector2i(27,20), true, true, true, true, null, 0, null)
+	location_dictionary[Vector2i(33,29)] = location.new(GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION, 0, GLOBALVARIABLES.RESOURCE_TYPE.METAL, Vector2i(33,29), true, true, true, true, null, 0, null)
+
+	
 
 	neighbor_dictionary[Vector2i(34,20)] = {} # Home Base
 	neighbor_dictionary[Vector2i(26,27)] = {} # Production 1
 	neighbor_dictionary[Vector2i(45,18)] = {} # Production 1
 
+	neighbor_dictionary[Vector2i(28,10)] = {}
+	neighbor_dictionary[Vector2i(40,12)] = {}
+	neighbor_dictionary[Vector2i(28,35)] = {}
+	neighbor_dictionary[Vector2i(32,35)] = {}
+	neighbor_dictionary[Vector2i(39,33)] = {}
+
+	neighbor_dictionary[Vector2i(27,20)] = {}
+	neighbor_dictionary[Vector2i(33,29)] = {}
+	
+
 	routes[Vector2i(34,20)] = {}
 	routes[Vector2i(26,27)] = {}
 	routes[Vector2i(45,18)] = {}
+
+	
+	routes[Vector2i(28,10)] = {}
+	routes[Vector2i(40,12)] = {}
+	routes[Vector2i(28,35)] = {}
+	routes[Vector2i(32,35)] = {}
+	routes[Vector2i(39,33)] = {}
+	
+	routes[Vector2i(27,20)] = {}
+	routes[Vector2i(33,29)] = {}
 
 func calculate_paths(selected_tile : Array):
 

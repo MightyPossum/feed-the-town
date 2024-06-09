@@ -72,7 +72,7 @@ func _process(_delta):
 		select_tile(4)
 	if Input.is_action_just_released("rotate_tile"):
 		rotate_tile()
-	if Input.is_action_pressed("place_tile"):
+	if Input.is_action_just_released("place_tile"):
 		place_tile()
 		
 	if Input.is_action_just_released("change_color"):
@@ -130,20 +130,33 @@ func select_tile(tile : int):
 			bulldozer = true
 
 func place_tile():
-	
+	print(tile_coords)
 	if not tile_coords:
 		return
 	if bulldozer:
-		sfx_player.stream = SFX[0]
-		sfx_player.play()
-		set_cell(built_layer, tile_coords, -1)
+		if GLOBALVARIABLES.money >= 100:
+			
+			update_money(-100)
+			sfx_player.stream = SFX[0]
+			sfx_player.play()
+			set_cell(built_layer, tile_coords, -1)
 	else:
-		if get_cell_tile_data(built_layer, tile_coords) != null or get_cell_tile_data(base_layer, tile_coords) != null:
-			return	
-		sfx_player.stream = SFX[1]
-		sfx_player.play()
-		selected_tile[4] = tile_rotation()
-		set_cell(built_layer, tile_coords, GLOBALVARIABLES.color, selected_tile[1], selected_tile[4])
+		var price = 0
+		if selected_tile[1] == Vector2i(0,13):
+				price = 100
+		if selected_tile[1] == Vector2i(0,17):
+				price = 150
+		if selected_tile[1] == Vector2i(0,19):
+				price = 500
+		
+		if GLOBALVARIABLES.money >= price:
+			update_money(-price)
+			if get_cell_tile_data(built_layer, tile_coords) != null or get_cell_tile_data(base_layer, tile_coords) != null:
+				return	
+			sfx_player.stream = SFX[1]
+			sfx_player.play()
+			selected_tile[4] = tile_rotation()
+			set_cell(built_layer, tile_coords, GLOBALVARIABLES.color, selected_tile[1], selected_tile[4])
 
 	selected_tile[3] = tile_coords
 	%PathHandler.calculate_paths(selected_tile)
@@ -193,3 +206,9 @@ func change_color_scheme():
 				if tile != null:
 					set_cell(layer, Vector2i(x, y), GLOBALVARIABLES.color, get_cell_atlas_coords(layer, Vector2i(x,y)), get_cell_alternative_tile(layer, Vector2i(x,y)))
 	pass
+
+func update_money(amount):
+	GLOBALVARIABLES.money += amount
+	if GLOBALVARIABLES.money <= 0:
+		get_tree().quit()
+	%Score.text = str(GLOBALVARIABLES.money)

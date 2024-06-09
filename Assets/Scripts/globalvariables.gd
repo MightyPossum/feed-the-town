@@ -35,7 +35,7 @@ enum COMPASS {
     SOUTH,
 }
 
-var money : float = 0.0
+var money : int = 2500
 var travel_routes : Dictionary
 var location_dictionary : Dictionary
 var color = 0
@@ -52,4 +52,3 @@ func transaction_resource(resource : Resource_class, transaction_type : int) -> 
             money += transaction_value
         PURCHASE_TYPE.SELL:
             money -= transaction_value
-

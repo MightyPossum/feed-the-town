@@ -2,6 +2,7 @@ class_name location
 
 var location_type : int
 var location_resource_abundance : int
+var fetched_resource : int
 var location_resource_type
 var location_coords : Vector2i
 var location_tile
@@ -56,3 +57,14 @@ func can_connect(neighbor_side : int) -> bool:
                 allowed_connection = true
 
     return allowed_connection
+
+func increment_abundance():
+    location_resource_abundance += 1
+    if location_resource_abundance > 3:
+        location_resource_abundance = 3
+
+
+func decrement_abundance():
+    location_resource_abundance -= 1
+    if location_resource_abundance < 0:
+        location_resource_abundance = 0
