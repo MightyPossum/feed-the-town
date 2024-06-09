@@ -2,9 +2,9 @@ extends TileMap
 
 
 @onready var sfx_player = $SFX
-@onready var gui_rect = $Control/NinePatchRect
-@onready var gui_coin = $Control/HBoxContainer/Coin
-@onready var score_text = $Control/HBoxContainer/Score
+@onready var gui_rect = $Control/MenuBar
+@onready var gui_coin = $Control/HBox/Coin
+@onready var score_text = $Control/HBox/Score
 
 @export var gui_rect_texture = []
 @export var gui_coin_texture = []
