@@ -11,7 +11,7 @@ var location_dictionary : Dictionary
 func _physics_process(_delta: float) -> void:
 	if moving:
 		moving = false  
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(.2).timeout
 		move_along()
 
 func _ready() -> void:
@@ -64,10 +64,15 @@ func move_along():
 				if at_first_location:
 					match location_dictionary[current_location].location_type:
 						GLOBALVARIABLES.LOCATION_TYPE.MINING:
-							tile_map.update_money(-100)
+							if location_dictionary[end_location].location_type == GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION:
+								if location_dictionary[end_location].location_resource_abundance < 3:
+									tile_map.update_money(-100)
+							else:
+								tile_map.update_money(-100)
 						GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION:
-							if location_dictionary[current_location].location_resource_abundance > 0:
-								tile_map.update_money(-300)
+							if location_dictionary[current_location].location_resource_abundance > 0 and location_dictionary[end_location].location_type == GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE:
+								tile_map.update_money(-250)
+								location_dictionary[start_location].fetched_resource += 1
 								location_dictionary[current_location].decrement_abundance()
 								var location_tile
 								match location_dictionary[current_location].location_resource_abundance:
@@ -76,23 +81,23 @@ func move_along():
 									2: location_tile = Vector2i(0,29)
 									3: location_tile = Vector2i(0,31)
 								tile_map.set_cell(tile_map.base_layer, current_location, GLOBALVARIABLES.color, location_tile, 0)
-								location_dictionary[start_location].fetched_resource += 1
 
 				elif at_last_location:
 					match location_dictionary[current_location].location_type:
 						GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION:
 							if location_dictionary[start_location].location_type == GLOBALVARIABLES.LOCATION_TYPE.MINING:
-								location_dictionary[current_location].increment_abundance()
-								var location_tile
-								match location_dictionary[current_location].location_resource_abundance:
-									0: location_tile = Vector2i(0,5)
-									1: location_tile = Vector2i(0,27)
-									2: location_tile = Vector2i(0,29)
-									3: location_tile = Vector2i(0,31)
-								tile_map.set_cell(tile_map.base_layer, current_location, GLOBALVARIABLES.color, location_tile, 0)
+								if location_dictionary[current_location].location_resource_abundance <= 2: 
+									location_dictionary[current_location].increment_abundance()
+									var location_tile
+									match location_dictionary[current_location].location_resource_abundance:
+										0: location_tile = Vector2i(0,5)
+										1: location_tile = Vector2i(0,27)
+										2: location_tile = Vector2i(0,29)
+										3: location_tile = Vector2i(0,31)
+									tile_map.set_cell(tile_map.base_layer, current_location, GLOBALVARIABLES.color, location_tile, 0)
 						GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE:
 							if location_dictionary[start_location].location_type == GLOBALVARIABLES.LOCATION_TYPE.MINING:
-								tile_map.update_money(150)
+								tile_map.update_money(200)
 							if location_dictionary[start_location].location_type == GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION:
 								if location_dictionary[start_location].fetched_resource > 0:
 									tile_map.update_money(500)

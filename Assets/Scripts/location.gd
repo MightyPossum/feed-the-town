@@ -2,7 +2,7 @@ class_name location
 
 var location_type : int
 var location_resource_abundance : int
-var fetched_resource : int
+var fetched_resource : int = 0
 var location_resource_type
 var location_coords : Vector2i
 var location_tile
