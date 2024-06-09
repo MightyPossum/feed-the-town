@@ -4,9 +4,18 @@ extends TileMap
 @onready var sfx_player = $SFX
 @onready var gui_rect = $Control/NinePatchRect
 @onready var gui_coin = $Control/HBoxContainer/Coin
+@onready var score_text = $Control/HBoxContainer/Score
+
 @export var gui_rect_texture = []
 @export var gui_coin_texture = []
 @export var SFX = []
+
+@export var gui_color : Array[Color]
+
+
+
+
+
 var previous_tile_coords = null
 var selected_tile : Array = []
 var tile_rotated = 0
@@ -166,11 +175,11 @@ func draw_tile():
 	
 func change_color_scheme():
 	color = (color + 1) % 8
-	
 	var used_rect = get_used_rect()
 	
 	gui_rect.texture = gui_rect_texture[color]
 	gui_coin.texture = gui_coin_texture[color]
+	score_text.add_theme_color_override("font_color", Color(gui_color[color]))
 
 	for layer in [background_layer, base_layer, built_layer]:
 		for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
