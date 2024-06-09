@@ -197,7 +197,7 @@ offset_top = 56.0
 offset_right = 756.0
 offset_bottom = 95.0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Control"]
+[node name="MenuBar" type="NinePatchRect" parent="Control"]
 layout_mode = 0
 offset_left = -2.0
 offset_right = 381.0
@@ -208,7 +208,7 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="HBox" type="HBoxContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,13 +222,13 @@ grow_vertical = 2
 alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Coin" type="TextureRect" parent="Control/HBoxContainer"]
+[node name="Coin" type="TextureRect" parent="Control/HBox"]
 layout_mode = 2
 texture = ExtResource("18_bs3ji")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Score" type="Label" parent="Control/HBoxContainer"]
+[node name="Score" type="Label" parent="Control/HBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.972641, 0.796277, 0.231067, 1)
 theme_override_fonts/font = ExtResource("32_fgoer")

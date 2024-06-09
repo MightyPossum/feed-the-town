@@ -162,7 +162,6 @@ func tile_rotation() -> int:
 			current_rotation = TileRotation.ROTATE_270
 
 	return current_rotation
-
 func clear_map_layer(layer: int):
 	var used_rect = get_used_rect()
 	for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
