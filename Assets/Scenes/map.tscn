@@ -1,7 +1,7 @@
 [gd_scene load_steps=44 format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
-[ext_resource type="Script" path="res://Assets/Scripts/map.gd" id="2_434ni"]
+[ext_resource type="Script" uid="uid://beomqypkwoccd" path="res://Assets/Scripts/map.gd" id="2_434ni"]
 [ext_resource type="Texture2D" uid="uid://nr4eo0t31il5" path="res://Assets/Art/Sprite_02.png" id="2_avcqt"]
 [ext_resource type="Texture2D" uid="uid://cwr4053018jkp" path="res://Assets/Art/Sprite_03.png" id="3_k1uku"]
 [ext_resource type="Texture2D" uid="uid://ds8nf7tv0ftxp" path="res://Assets/Art/Sprite_04.png" id="4_nqdj3"]
@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://t852c2xwiofw" path="res://Assets/Art/Sprite_06.png" id="6_xee8t"]
 [ext_resource type="Texture2D" uid="uid://bk3jh4pfq7n2y" path="res://Assets/Art/Sprite_07.png" id="7_37drx"]
 [ext_resource type="Texture2D" uid="uid://6khvuf1g23tn" path="res://Assets/Art/Sprite_08.png" id="8_f1i3c"]
-[ext_resource type="Script" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
-[ext_resource type="PackedScene" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
+[ext_resource type="Script" uid="uid://kjrln2tgqvrr" path="res://Assets/Scenes/PathHandler.gd" id="10_1w0kk"]
+[ext_resource type="PackedScene" uid="uid://b6frtos7xmgi2" path="res://Assets/Scenes/camera.tscn" id="10_ccujc"]
 [ext_resource type="AudioStream" uid="uid://c2nnohlw84fka" path="res://Assets/Audio/place_road.wav" id="10_jhlak"]
 [ext_resource type="Texture2D" uid="uid://cqha5payu5fdp" path="res://Assets/Art/Patch_02.png" id="11_7vbd3"]
 [ext_resource type="AudioStream" uid="uid://biqak2kj1cca7" path="res://Assets/Audio/kabalJam.wav" id="11_78iev"]
@@ -32,7 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://u38vo7qrjtnn" path="res://Assets/Art/Coin_06.png" id="23_2xibj"]
 [ext_resource type="Texture2D" uid="uid://w7s1171swlcn" path="res://Assets/Art/Coin_07.png" id="24_78dn7"]
 [ext_resource type="Texture2D" uid="uid://drxr6b17b3omi" path="res://Assets/Art/Coin_08.png" id="25_ai5ws"]
-[ext_resource type="Script" path="res://Assets/Scenes/RouteController.gd" id="32_b8k7f"]
+[ext_resource type="Script" uid="uid://bpdkfe6fvofwd" path="res://Assets/Scenes/RouteController.gd" id="32_b8k7f"]
 [ext_resource type="FontFile" uid="uid://e8n71ugfrfbl" path="res://Assets/Fonts/ARCADECLASSIC.TTF" id="32_fgoer"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbyi5"]
@@ -205,11 +205,8 @@ layer_0/tile_data = PackedInt32Array(0, 0, 21, 65536, 0, 21, 131072, 0, 21, 1966
 layer_1/name = "Base"
 layer_1/tile_data = PackedInt32Array(1310754, 0, 3, 1769498, 0, 7, 1179693, 0, 5, 2162727, 0, 9, 655388, 0, 11, 2293788, 0, 11, 2293792, 0, 11, 786472, 0, 7, 1900577, 0, 5, 1310747, 0, 5)
 layer_2/name = "Built"
-layer_2/tile_data = PackedInt32Array()
 layer_3/name = "Constructor"
-layer_3/tile_data = PackedInt32Array()
 layer_4/name = "Selector"
-layer_4/tile_data = PackedInt32Array()
 script = ExtResource("2_434ni")
 gui_rect_texture = [ExtResource("16_wc62g"), ExtResource("11_7vbd3"), ExtResource("12_moui8"), ExtResource("13_tt7iq"), ExtResource("14_pl3ke"), ExtResource("15_rhihf"), ExtResource("16_tl70f"), ExtResource("17_flbsq")]
 gui_coin_texture = [ExtResource("18_bs3ji"), ExtResource("19_8eip4"), ExtResource("20_tl7ya"), ExtResource("21_gfvhu"), ExtResource("22_whuo6"), ExtResource("23_2xibj"), ExtResource("24_78dn7"), ExtResource("25_ai5ws")]
