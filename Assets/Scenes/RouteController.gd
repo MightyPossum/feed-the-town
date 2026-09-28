@@ -53,13 +53,17 @@ func move_along():
 			var start_location = current_paths[path_start_vector][path_end_vector]["start_location"]
 			var at_first_location : bool = false
 			var at_last_location : bool = false
-			
+
+			if not location_dictionary.has(current_location) or not location_dictionary.has(previous_location) or not location_dictionary.has(start_location) or not location_dictionary.has(end_location):
+				path_end_vectors_to_remove.append(path_end_vector)
+				continue
+
 			if current_location == previous_location:
 				at_first_location = true
 			elif current_location == end_location:
 				at_last_location = true
 
-			
+
 
 			if [GLOBALVARIABLES.LOCATION_TYPE.HOMEBASE, GLOBALVARIABLES.LOCATION_TYPE.MINING, GLOBALVARIABLES.LOCATION_TYPE.PRODUCTION].has(location_dictionary[current_location].location_type):
 				if at_first_location:
