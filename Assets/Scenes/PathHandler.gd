@@ -171,10 +171,14 @@ func remove_tile_from_paths(tile_vector : Vector2i):
 	location_dictionary.erase(tile_vector)
 
 	for start_location in routes:
+		var end_locations_to_remove = []
 		for end_location in routes[start_location]:
 			for path in routes[start_location][end_location]:
 				if path == tile_vector:
-					routes[start_location].erase(end_location)
+					end_locations_to_remove.append(end_location)
+					break
+		for end_location in end_locations_to_remove:
+			routes[start_location].erase(end_location)
 
 	create_pathways()
 

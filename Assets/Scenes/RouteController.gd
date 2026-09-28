@@ -45,6 +45,7 @@ func move_along():
 
 	
 	for path_start_vector in current_paths:
+		var path_end_vectors_to_remove = []
 		for path_end_vector in current_paths[path_start_vector]:
 			var current_location = current_paths[path_start_vector][path_end_vector]["path"].pop_front()
 			var previous_location = current_paths[path_start_vector][path_end_vector]["current_location"]
@@ -112,9 +113,11 @@ func move_along():
 
 			if at_last_location:
 				routes[path_start_vector][path_end_vector].reverse()
-				current_paths[path_start_vector].erase(path_end_vector)
+				path_end_vectors_to_remove.append(path_end_vector)
 			else:
 				current_paths[path_start_vector][path_end_vector]["current_location"] = current_location
 
-	
+		for path_end_vector in path_end_vectors_to_remove:
+			current_paths[path_start_vector].erase(path_end_vector)
+
 	moving = true
