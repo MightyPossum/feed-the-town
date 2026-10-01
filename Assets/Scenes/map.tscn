@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dfruisq0aljgw"]
+[gd_scene format=3 uid="uid://dfruisq0aljgw"]
 
 [ext_resource type="Texture2D" uid="uid://c1psf81bd8k0n" path="res://Assets/Art/Sprite_01.png" id="1_4mii3"]
 [ext_resource type="Script" uid="uid://beomqypkwoccd" path="res://Assets/Scripts/map.gd" id="2_434ni"]
@@ -197,7 +197,7 @@ sources/5 = SubResource("TileSetAtlasSource_6xqt2")
 sources/6 = SubResource("TileSetAtlasSource_l1k31")
 sources/7 = SubResource("TileSetAtlasSource_u8w0e")
 
-[node name="Map" type="TileMap"]
+[node name="Map" type="TileMap" unique_id=1222760561]
 tile_set = SubResource("TileSet_x2cmc")
 format = 2
 layer_0/name = "Background"
@@ -213,28 +213,28 @@ gui_coin_texture = [ExtResource("18_bs3ji"), ExtResource("19_8eip4"), ExtResourc
 SFX = [ExtResource("10_jhlak"), ExtResource("11_wrh8i"), ExtResource("12_edwdt"), ExtResource("13_ojr6t")]
 gui_color = Array[Color]([Color(0.972549, 0.796078, 0.231373, 1), Color(0.243137, 0.321569, 0.952941, 1), Color(0.870588, 0, 0, 1), Color(0.952941, 0.227451, 0.596078, 1), Color(0.909804, 0.839216, 0.796078, 1), Color(0, 0.894118, 0.211765, 1), Color(0, 0, 0, 1), Color(1, 0.945098, 0.909804, 1)])
 
-[node name="Camera" parent="." instance=ExtResource("10_ccujc")]
+[node name="Camera" parent="." unique_id=1297542192 instance=ExtResource("10_ccujc")]
 
-[node name="AudioListener2D" type="AudioListener2D" parent="Camera"]
-position = Vector2(-5.65e+07, -3.43e+07)
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera" unique_id=335413266]
+position = Vector2(-56500000, -34300000)
 scale = Vector2(100000, 100000)
 
-[node name="PathHandler" type="Node2D" parent="."]
+[node name="PathHandler" type="Node2D" parent="." unique_id=1523960211]
 unique_name_in_owner = true
 script = ExtResource("10_1w0kk")
 
-[node name="RouteController" type="Node2D" parent="."]
+[node name="RouteController" type="Node2D" parent="." unique_id=1040212997]
 script = ExtResource("32_b8k7f")
 
-[node name="BGMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="BGMusic" type="AudioStreamPlayer2D" parent="." unique_id=1134787891]
 stream = ExtResource("11_78iev")
 volume_db = -10.0
 autoplay = true
 
-[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+[node name="SFX" type="AudioStreamPlayer2D" parent="." unique_id=1374164541]
 volume_db = -10.0
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1225260261]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 375.0
@@ -242,7 +242,7 @@ offset_top = 56.0
 offset_right = 756.0
 offset_bottom = 95.0
 
-[node name="MenuBar" type="NinePatchRect" parent="Control"]
+[node name="MenuBar" type="NinePatchRect" parent="Control" unique_id=1045789287]
 layout_mode = 0
 offset_left = -2.0
 offset_right = 381.0
@@ -253,7 +253,7 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="HBox" type="HBoxContainer" parent="Control"]
+[node name="HBox" type="HBoxContainer" parent="Control" unique_id=1643559761]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -267,13 +267,13 @@ grow_vertical = 2
 alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Coin" type="TextureRect" parent="Control/HBox"]
+[node name="Coin" type="TextureRect" parent="Control/HBox" unique_id=1025878425]
 layout_mode = 2
 texture = ExtResource("18_bs3ji")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Score" type="Label" parent="Control/HBox"]
+[node name="Score" type="Label" parent="Control/HBox" unique_id=1566307968]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.972641, 0.796277, 0.231067, 1)

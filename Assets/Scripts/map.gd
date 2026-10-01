@@ -186,7 +186,7 @@ func clear_map_layer(layer: int):
 	for x in range(used_rect.position.x, used_rect.position.x + used_rect.size.x):
 		for y in range(used_rect.position.y, used_rect.position.y + used_rect.size.y):
 			set_cell(layer, Vector2i(x, y), -1)
-
+			
 func draw_tile():
 	set_cell(construct_layer, tile_coords, GLOBALVARIABLES.color, selected_tile[1], tile_rotation())
 	set_cell(selector_layer, tile_coords, GLOBALVARIABLES.color, Vector2i(0,1))

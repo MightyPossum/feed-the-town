@@ -115,7 +115,7 @@ func create_pathways():
 	# Check any potential paths
 	for start_vector in routes:
 		for end_vector in routes:
-			if start_vector != end_vector and location_dictionary[start_vector].location_type != location_dictionary[end_vector].location_type:
+			if start_vector != end_vector and location_dictionary.has(start_vector) and location_dictionary.has(end_vector) and location_dictionary[start_vector].location_type != location_dictionary[end_vector].location_type:
 				var dijkstra_result = dijkstra(start_vector, end_vector)
 				if dijkstra_result.size() > 1 and dijkstra_result.path.front() == start_vector:
 					var break_the_loop = false
@@ -163,18 +163,31 @@ func try_connect(current_vector, test_vector, compass_int):
 
 
 func remove_tile_from_paths(tile_vector : Vector2i):
-	if neighbor_dictionary.has(tile_vector):
-		for connected_vector in neighbor_dictionary[tile_vector]:
-			neighbor_dictionary[connected_vector].erase(tile_vector)
+	if not neighbor_dictionary.has(tile_vector):
+		return
+
+	var route_controller = get_tree().root.get_node("Map/RouteController")
+	for vehicle_pos in route_controller.vehicles:
+		if vehicle_pos == tile_vector:
+			print("Vehicle is on the path. Cannot delete.")
+			return
+
+
+	for connected_vector in neighbor_dictionary[tile_vector]:
+		neighbor_dictionary[connected_vector].erase(tile_vector)
 
 	neighbor_dictionary.erase(tile_vector)
 	location_dictionary.erase(tile_vector)
 
 	for start_location in routes:
+		var end_locations_to_remove = []
 		for end_location in routes[start_location]:
 			for path in routes[start_location][end_location]:
 				if path == tile_vector:
-					routes[start_location].erase(end_location)
+					end_locations_to_remove.append(end_location)
+					break
+		for end_location in end_locations_to_remove:
+			routes[start_location].erase(end_location)
 
 	create_pathways()
 
